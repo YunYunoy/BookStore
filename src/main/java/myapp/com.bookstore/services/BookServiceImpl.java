@@ -12,7 +12,7 @@ import java.util.*;
 @Service
 public class BookServiceImpl implements BookService {
 
-    private Map<UUID, BookDTO> bookMap;
+    private final Map<UUID, BookDTO> bookMap;
 
     public BookServiceImpl() {
         this.bookMap = new HashMap<>();
@@ -85,43 +85,45 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void updateBookById(UUID id, BookDTO book) {
-        BookDTO existing = bookMap.get(id);
-        existing.setAuthors(book.getAuthors());
-        existing.setBookGenre(book.getBookGenre());
-        existing.setIsbn(book.getIsbn());
-        existing.setPrice(book.getPrice());
-        existing.setTitle(book.getTitle());
-        existing.setPublisher(book.getPublisher());
-        existing.setUpdateDate(LocalDateTime.now());
+    public Optional<BookDTO> updateBookById(UUID id, BookDTO book) {
+        BookDTO savedBook = bookMap.get(id);
+        savedBook.setAuthors(book.getAuthors());
+        savedBook.setBookGenre(book.getBookGenre());
+        savedBook.setIsbn(book.getIsbn());
+        savedBook.setPrice(book.getPrice());
+        savedBook.setTitle(book.getTitle());
+        savedBook.setPublisher(book.getPublisher());
+        savedBook.setUpdateDate(LocalDateTime.now());
+        return Optional.of(savedBook);
     }
 
     @Override
-    public void deleteBookById(UUID id) {
+    public Boolean deleteBookById(UUID id) {
         bookMap.remove(id);
+        return true;
     }
 
     @Override
     public void patchBookById(UUID id, BookDTO book) {
-        BookDTO existing = bookMap.get(id);
+        BookDTO savedBook = bookMap.get(id);
 
         if (StringUtils.hasText(book.getTitle())) {
-            existing.setTitle(book.getTitle());
+            savedBook.setTitle(book.getTitle());
         }
         if (StringUtils.hasText(book.getPublisher())) {
-            existing.setPublisher(book.getPublisher());
+            savedBook.setPublisher(book.getPublisher());
         }
         if (book.getAuthors() != null) {
-            existing.setAuthors(book.getAuthors());
+            savedBook.setAuthors(book.getAuthors());
         }
         if (book.getBookGenre() != null) {
-            existing.setBookGenre(book.getBookGenre());
+            savedBook.setBookGenre(book.getBookGenre());
         }
         if (book.getIsbn() != null) {
-            existing.setIsbn(book.getIsbn());
+            savedBook.setIsbn(book.getIsbn());
         }
         if (book.getPrice() != null) {
-            existing.setPrice(book.getPrice());
+            savedBook.setPrice(book.getPrice());
         }
     }
 }

@@ -3,7 +3,8 @@ package myapp.com.bookstore.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -18,8 +19,14 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(length = 36, columnDefinition = "varchar", updatable = false, nullable = false)
     private UUID id;
-    private String name;
+    private String first_name;
+    private String last_name;
 
-    @ManyToMany
-    private List<Book> books;
+    @ManyToMany(mappedBy = "authors")
+    private Set<Book> books = new HashSet<>();
+
+    public Author(String first_name, String last_name) {
+        this.first_name = first_name;
+        this.last_name = last_name;
+    }
 }

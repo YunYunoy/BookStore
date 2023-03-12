@@ -8,7 +8,7 @@ import java.awt.print.Book;
 @Mapper
 public interface BookMapper {
 
-    BookDTO BookToBookDTO(Book book);
+    BookDTO bookToBookDTO(Book book);
 
-    Book BookDTOToBook(BookDTO bookDTO);
+    Book bookDTOToBook(BookDTO bookDTO);
 }
