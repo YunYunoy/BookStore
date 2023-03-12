@@ -13,7 +13,7 @@ import java.util.UUID;
 public class BookDTO {
     private UUID id;
     private Integer version;
-    private Long isbn;
+    private String isbn;
     private String title;
     private BigDecimal price;
     public BookGenre bookGenre;
@@ -23,7 +23,7 @@ public class BookDTO {
     private LocalDateTime updateDate;
 
     public enum BookGenre {
-        FICTION, DRAMA, ROMANCE, SCIENCE_FICTION, FANTASY, HORROR, DOCUMENTARY, PSYCHOLOGICAL, POETRY,SCIENCE;
+        FICTION, DRAMA, ROMANCE, SCIENCE_FICTION, FANTASY, HORROR, DOCUMENTARY, PSYCHOLOGICAL, POETRY,SCIENCE
     }
 }
 

@@ -14,9 +14,9 @@ public interface BookService {
 
     BookDTO saveNewBook(BookDTO book);
 
-    void updateBookById(UUID id, BookDTO book);
+    Optional<BookDTO> updateBookById(UUID id, BookDTO book);
 
-    void deleteBookById(UUID id);
+    Boolean deleteBookById(UUID id);
 
     void patchBookById(UUID id, BookDTO book);
 }

@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -29,7 +30,7 @@ public class CustomerController {
     }
 
     @GetMapping(CUSTOMER_PATH_ID)
-    public CustomerDTO getBookById(@PathVariable("id") UUID id) {
+    public Optional<CustomerDTO> getBookById(@PathVariable("id") UUID id) {
         return customerService.getCustomerById(id);
     }
 
