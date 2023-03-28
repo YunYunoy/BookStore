@@ -2,7 +2,7 @@ package myapp.com.bookstore.services;
 
 import lombok.RequiredArgsConstructor;
 import myapp.com.bookstore.entity.Customer;
-import myapp.com.bookstore.mappers.ModelCustomerMapper;
+import myapp.com.bookstore.mappers.CustomerMapper;
 import myapp.com.bookstore.model.CustomerDTO;
 import myapp.com.bookstore.repository.CustomerRepository;
 import org.springframework.context.annotation.Primary;
@@ -19,24 +19,24 @@ import java.util.stream.Collectors;
 public class CustomerServiceJPA implements CustomerService {
 
     private final CustomerRepository customerRepository;
-    private final ModelCustomerMapper modelCustomerMapper;
+    private final CustomerMapper customerMapper;
 
     @Override
     public List<CustomerDTO> listCustomers() {
         return customerRepository.findAll()
                 .stream()
-                .map(modelCustomerMapper::toDTO)
+                .map(customerMapper::customerToCustomerDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
     public Optional<CustomerDTO> getCustomerById(UUID id) {
-        return Optional.ofNullable(modelCustomerMapper.toDTO(customerRepository.findById(id).orElse(null)));
+        return Optional.ofNullable(customerMapper.customerToCustomerDTO(customerRepository.findById(id).orElse(null)));
     }
 
     @Override
     public CustomerDTO saveNewCustomer(CustomerDTO customerDTO) {
-        return modelCustomerMapper.toDTO(customerRepository.save(modelCustomerMapper.toEntity(customerDTO)));
+        return customerMapper.customerToCustomerDTO(customerRepository.save(customerMapper.customerDTOToCustomer(customerDTO)));
     }
 
     @Override
@@ -48,7 +48,7 @@ public class CustomerServiceJPA implements CustomerService {
             customer.setEmail(customerDTO.getEmail());
 
             Customer updatedCustomer = customerRepository.save(customer);
-            return Optional.of(modelCustomerMapper.toDTO(updatedCustomer));
+            return Optional.of(customerMapper.customerToCustomerDTO(updatedCustomer));
         }
         return Optional.empty();
     }

@@ -2,7 +2,7 @@ package myapp.com.bookstore.services;
 
 import lombok.RequiredArgsConstructor;
 import myapp.com.bookstore.entity.Book;
-import myapp.com.bookstore.mappers.ModelBookMapper;
+import myapp.com.bookstore.mappers.BookMapper;
 import myapp.com.bookstore.model.BookDTO;
 import myapp.com.bookstore.repository.BookRepository;
 import org.springframework.context.annotation.Primary;
@@ -19,24 +19,24 @@ import java.util.stream.Collectors;
 public class BookServiceJPA implements BookService {
 
     private final BookRepository bookRepository;
-    private final ModelBookMapper modelBookMapper;
+    private final BookMapper bookMapper;
 
     @Override
     public List<BookDTO> listBooks() {
         return bookRepository.findAll()
                 .stream()
-                .map(modelBookMapper::toDTO)
+                .map(bookMapper::bookToBookDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
     public Optional<BookDTO> getBookById(UUID id) {
-        return Optional.ofNullable(modelBookMapper.toDTO(bookRepository.findById(id).orElse(null)));
+        return Optional.ofNullable(bookMapper.bookToBookDTO(bookRepository.findById(id).orElse(null)));
     }
 
     @Override
     public BookDTO saveNewBook(BookDTO bookDTO) {
-        return modelBookMapper.toDTO(bookRepository.save(modelBookMapper.toEntity(bookDTO)));
+        return bookMapper.bookToBookDTO(bookRepository.save(bookMapper.bookDTOToBook(bookDTO)));
     }
 
     @Override
@@ -48,7 +48,7 @@ public class BookServiceJPA implements BookService {
             book.setPrice(bookDTO.getPrice());
 
             Book updatedBook = bookRepository.save(book);
-            return Optional.of(modelBookMapper.toDTO(updatedBook));
+            return Optional.of(bookMapper.bookToBookDTO(updatedBook));
         }
         return Optional.empty();
     }

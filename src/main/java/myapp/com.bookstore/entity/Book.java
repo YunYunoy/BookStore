@@ -3,7 +3,9 @@ package myapp.com.bookstore.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import myapp.com.bookstore.model.BookDTO;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -21,7 +23,7 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "UUID")
-    @GenericGenerator(name = "UUID",strategy = "org.hibernate.id.UUIDGenerator")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(nullable = false, updatable = false, length = 36, columnDefinition = "varchar")
     private UUID id;
     private Integer version;
@@ -29,12 +31,12 @@ public class Book {
     private String title;
     private BigDecimal price;
     public BookDTO.BookGenre bookGenre;
-
-    @ManyToMany
-    @JoinTable(name = "author_book", joinColumns = @JoinColumn(name = "book_id"),inverseJoinColumns = @JoinColumn(name = "author_id"))
-    private Set<Author> authors = new HashSet<>();
+    @ElementCollection
+    private Set<String> authors = new HashSet<>();
     private String publisher;
+    @CreationTimestamp
     private LocalDateTime createdDate;
+    @UpdateTimestamp
     private LocalDateTime updateDate;
 
     public Book(String isbn, String title, BigDecimal price) {

@@ -5,7 +5,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Builder
@@ -17,13 +17,13 @@ public class BookDTO {
     private String title;
     private BigDecimal price;
     public BookGenre bookGenre;
-    private List<String> authors;
+    private Set<String> authors;
     private String publisher;
     private LocalDateTime createdDate;
     private LocalDateTime updateDate;
 
     public enum BookGenre {
-        FICTION, DRAMA, ROMANCE, SCIENCE_FICTION, FANTASY, HORROR, DOCUMENTARY, PSYCHOLOGICAL, POETRY,SCIENCE
+        FICTION, DRAMA, ROMANCE, SCIENCE_FICTION, FANTASY, HORROR, DOCUMENTARY, PSYCHOLOGICAL, POETRY, THRILLER, HISTORICAL_FICTION, BIOGRAPHY, MYSTERY, SCIENCE
     }
 }
 
