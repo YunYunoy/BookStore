@@ -14,8 +14,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 import java.awt.print.Book;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -78,7 +80,7 @@ class BookControllerTest {
     }
 
     @Test
-    void getBookByIdNotFound() throws Exception{
+    void getBookByIdNotFound() throws Exception {
         given(bookService.getBookById(any(UUID.class))).willReturn(Optional.empty());
 
         mockMvc.perform(get(BookController.BOOK_PATH_ID, UUID.randomUUID()))
@@ -144,4 +146,19 @@ class BookControllerTest {
         assertThat(book.getId()).isEqualTo(uuidArgumentCaptor.getValue());
         assertThat(bookMap.get("title")).isEqualTo(bookArgumentCaptor.getValue().getTitle());
     }
+
+    @Test
+    void testUpdateBeerBlankName() throws Exception {
+
+        BookDTO bookDTO = bookServiceImpl.listBooks().get(0);
+        bookDTO.setTitle("");
+        given(bookService.updateBookById(any(), any())).willReturn(Optional.of(bookDTO));
+
+        mockMvc.perform(put(BookController.BOOK_PATH_ID, bookDTO.getId())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(bookDTO)))
+                .andExpect(status().isBadRequest());
+    }
+
 }

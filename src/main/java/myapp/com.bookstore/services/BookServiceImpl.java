@@ -16,43 +16,43 @@ public class BookServiceImpl implements BookService {
 
     public BookServiceImpl() {
         this.bookMap = new HashMap<>();
-//
-//        BookDTO book1 = BookDTO.builder()
-//                .id(UUID.randomUUID())
-//                .version(1)
-//                .bookGenre(BookDTO.BookGenre.FANTASY)
-//                .title("Witcher")
-//                .authors(new HashSet<>(Arrays.asList("Andrzej Sapkowski", "CD Projekt RED")))
-//                .publisher("Publisher 1")
-//                .createdDate(LocalDateTime.now())
-//                .updateDate(LocalDateTime.now())
-//                .build();
-//
-//        BookDTO book2 = BookDTO.builder()
-//                .id(UUID.randomUUID())
-//                .version(1)
-//                .bookGenre(BookDTO.BookGenre.SCIENCE)
-//                .title("Effective Java")
-//                .authors(new HashSet<>(Arrays.asList("Joshua Bloch")))
-//                .publisher("Publisher 2")
-//                .createdDate(LocalDateTime.now())
-//                .updateDate(LocalDateTime.now())
-//                .build();
-//
-//        BookDTO book3 = BookDTO.builder()
-//                .id(UUID.randomUUID())
-//                .version(1)
-//                .bookGenre(BookDTO.BookGenre.HORROR)
-//                .title("IT")
-//                .authors(new HashSet<>(Arrays.asList("Stephen King")))
-//                .publisher("Publisher 3")
-//                .createdDate(LocalDateTime.now())
-//                .updateDate(LocalDateTime.now())
-//                .build();
-//
-//        bookMap.put(book1.getId(), book1);
-//        bookMap.put(book2.getId(), book2);
-//        bookMap.put(book3.getId(), book3);
+
+        BookDTO book1 = BookDTO.builder()
+                .id(UUID.randomUUID())
+                .version(1)
+                .bookGenre(BookDTO.BookGenre.FANTASY)
+                .title("Witcher")
+                .authors(new HashSet<>(Arrays.asList("Andrzej Sapkowski", "CD Projekt RED")))
+                .publisher("Publisher 1")
+                .createdDate(LocalDateTime.now())
+                .updateDate(LocalDateTime.now())
+                .build();
+
+        BookDTO book2 = BookDTO.builder()
+                .id(UUID.randomUUID())
+                .version(1)
+                .bookGenre(BookDTO.BookGenre.SCIENCE)
+                .title("Effective Java")
+                .authors(new HashSet<>(Arrays.asList("Joshua Bloch")))
+                .publisher("Publisher 2")
+                .createdDate(LocalDateTime.now())
+                .updateDate(LocalDateTime.now())
+                .build();
+
+        BookDTO book3 = BookDTO.builder()
+                .id(UUID.randomUUID())
+                .version(1)
+                .bookGenre(BookDTO.BookGenre.HORROR)
+                .title("IT")
+                .authors(new HashSet<>(Arrays.asList("Stephen King")))
+                .publisher("Publisher 3")
+                .createdDate(LocalDateTime.now())
+                .updateDate(LocalDateTime.now())
+                .build();
+
+        bookMap.put(book1.getId(), book1);
+        bookMap.put(book2.getId(), book2);
+        bookMap.put(book3.getId(), book3);
     }
 
     @Override

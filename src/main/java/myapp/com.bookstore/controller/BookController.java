@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,7 +35,7 @@ public class BookController {
     }
 
     @PostMapping(BOOK_PATH)
-    public ResponseEntity handlePost(@RequestBody BookDTO book) {
+    public ResponseEntity handlePost(@Validated @RequestBody BookDTO book) {
 
         BookDTO savedBook = bookService.saveNewBook(book);
 
@@ -45,7 +46,7 @@ public class BookController {
     }
 
     @PutMapping(BOOK_PATH_ID)
-    public ResponseEntity updateById(@PathVariable("bookId") UUID bookId, @RequestBody BookDTO book) {
+    public ResponseEntity updateById(@PathVariable("bookId") UUID bookId,@Validated @RequestBody BookDTO book) {
 
         bookService.updateBookById(bookId, book);
 
@@ -61,7 +62,7 @@ public class BookController {
     }
 
     @PatchMapping(BOOK_PATH_ID)
-    public ResponseEntity updateBookPatchById(@PathVariable("bookId") UUID bookId, @RequestBody BookDTO book) {
+    public ResponseEntity updateBookPatchById(@PathVariable("bookId") UUID bookId,@Validated @RequestBody BookDTO book) {
 
         bookService.patchBookById(bookId, book);
 
