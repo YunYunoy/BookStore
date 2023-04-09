@@ -23,6 +23,7 @@ public class BookDTO {
     private String title;
 
     @NotNull
+    @NotBlank
     private BigDecimal price;
     public BookGenre bookGenre;
     private Set<String> authors;
