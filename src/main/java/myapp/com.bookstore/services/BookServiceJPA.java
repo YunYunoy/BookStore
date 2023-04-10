@@ -6,6 +6,8 @@ import myapp.com.bookstore.mappers.BookMapper;
 import myapp.com.bookstore.model.BookDTO;
 import myapp.com.bookstore.repository.BookRepository;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,6 +31,7 @@ public class BookServiceJPA implements BookService {
                 .collect(Collectors.toList());
     }
 
+
     @Override
     public Optional<BookDTO> getBookById(UUID id) {
         return Optional.ofNullable(bookMapper.bookToBookDTO(bookRepository.findById(id).orElse(null)));
@@ -42,7 +45,7 @@ public class BookServiceJPA implements BookService {
     @Override
     public Optional<BookDTO> updateBookById(UUID id, BookDTO bookDTO) {
         Optional<Book> optionalBook = bookRepository.findById(id);
-        if(optionalBook.isPresent()){
+        if (optionalBook.isPresent()) {
             Book book = optionalBook.get();
             book.setTitle(bookDTO.getTitle());
             book.setPrice(bookDTO.getPrice());
@@ -64,5 +67,10 @@ public class BookServiceJPA implements BookService {
 
     @Override
     public void patchBookById(UUID id, BookDTO book) {
+    }
+
+    @Override
+    public Page<BookDTO> findAllPageable(Pageable pageable) {
+        return bookRepository.findAll(pageable).map(bookMapper::bookToBookDTO);
     }
 }

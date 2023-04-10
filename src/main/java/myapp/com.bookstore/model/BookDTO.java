@@ -2,6 +2,7 @@ package myapp.com.bookstore.model;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Builder;
 import lombok.Data;
 
@@ -22,8 +23,8 @@ public class BookDTO {
     @NotBlank
     private String title;
 
+    @PositiveOrZero
     @NotNull
-    @NotBlank
     private BigDecimal price;
     public BookGenre bookGenre;
     private Set<String> authors;

@@ -1,7 +1,12 @@
 package myapp.com.bookstore.services;
 
+import myapp.com.bookstore.entity.Book;
+import myapp.com.bookstore.mappers.BookMapper;
 import myapp.com.bookstore.model.BookDTO;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -59,6 +64,7 @@ public class BookServiceImpl implements BookService {
     public List<BookDTO> listBooks() {
         return new ArrayList<>(bookMap.values());
     }
+
 
     @Override
     public Optional<BookDTO> getBookById(UUID id) {
@@ -125,6 +131,11 @@ public class BookServiceImpl implements BookService {
         if (book.getPrice() != null) {
             savedBook.setPrice(book.getPrice());
         }
+    }
+
+    @Override
+    public Page<BookDTO> findAllPageable(Pageable pageable) {
+        return new PageImpl<>(new ArrayList<>(bookMap.values()));
     }
 }
 

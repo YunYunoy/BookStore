@@ -41,7 +41,6 @@ public class Book {
 
     @PositiveOrZero
     @NotNull
-    @NotBlank
     private BigDecimal price;
 
     @Enumerated

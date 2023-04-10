@@ -1,10 +1,15 @@
 package myapp.com.bookstore.controller;
 
+import myapp.com.bookstore.mappers.BookMapper;
 import myapp.com.bookstore.model.BookDTO;
 import myapp.com.bookstore.model.BookDTOModelAssembler;
 import myapp.com.bookstore.services.BookService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpHeaders;
@@ -13,9 +18,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.print.Book;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.*;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 
 @Slf4j
@@ -26,7 +37,7 @@ public class BookController {
 
     private final BookService bookService;
     private final BookDTOModelAssembler assembler;
-//    private final BookMapper bookMapper;
+    private final BookMapper bookMapper;
 
     public static final String BOOK_PATH = "/api/v1/books";
     public static final String BOOK_PATH_ID = BOOK_PATH + "/{bookId}";
@@ -43,6 +54,23 @@ public class BookController {
             return ResponseEntity.ok(CollectionModel.of(books));
         }
     }
+
+    @GetMapping(BOOK_PATH+"/search")
+    public ResponseEntity<CollectionModel<EntityModel<BookDTO>>> searchBooks2(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "title") String sortBy) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+        List<EntityModel<BookDTO>> books = bookService.findAllPageable(pageable).stream()
+                .map(assembler::toModel)
+                .toList();
+        if (books.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(CollectionModel.of(books));
+        }
+    }
+
 
     @GetMapping(BOOK_PATH_ID)
     public ResponseEntity<EntityModel<BookDTO>> getBookById(@PathVariable("bookId") UUID bookId) {
