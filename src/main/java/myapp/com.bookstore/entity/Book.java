@@ -3,11 +3,10 @@ package myapp.com.bookstore.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
-import myapp.com.bookstore.model.BookDTO;
+import myapp.com.bookstore.model.BookGenre;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.validator.constraints.Length;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -34,17 +33,15 @@ public class Book {
     private String isbn;
 
 
-    @Length(max = 255)
     @NotBlank
     @NotNull
     private String title;
 
-    @PositiveOrZero
     @NotNull
     private BigDecimal price;
 
     @Enumerated
-    public BookDTO.BookGenre bookGenre;
+    public BookGenre bookGenre;
 
     @ElementCollection
     private Set<String> authors = new HashSet<>();

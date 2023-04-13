@@ -1,7 +1,7 @@
 package myapp.com.bookstore.services;
 
-import myapp.com.bookstore.entity.Book;
 import myapp.com.bookstore.model.BookDTO;
+import myapp.com.bookstore.model.BookGenre;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -12,7 +12,8 @@ import java.util.UUID;
 public interface BookService {
 
     List<BookDTO> listBooks();
-    Page<BookDTO> findAllPageable(Pageable pageable);
+
+    Page<BookDTO> listBooksPageable(String title, BookGenre bookGenre, Integer pageNumber, Integer pageSize);
 
     Optional<BookDTO> getBookById(UUID id);
 

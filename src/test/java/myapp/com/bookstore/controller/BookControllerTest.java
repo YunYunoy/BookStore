@@ -2,9 +2,11 @@ package myapp.com.bookstore.controller;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import myapp.com.bookstore.entity.Book;
 import myapp.com.bookstore.model.BookDTO;
 import myapp.com.bookstore.services.BookService;
 import myapp.com.bookstore.services.BookServiceImpl;
+import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -57,6 +59,17 @@ class BookControllerTest {
                 .willReturn(bookServiceImpl.listBooks());
 
         mockMvc.perform(get(BookController.BOOK_PATH)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    void listBooksPageable() throws Exception {
+        given(bookService.listBooksPageable(any(), any() , any(), any()))
+                .willReturn(bookServiceImpl.listBooksPageable(null, null, null, null));
+
+        mockMvc.perform(get(BookController.BOOK_PATH+"/search")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));

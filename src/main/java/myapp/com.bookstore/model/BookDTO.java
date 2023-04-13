@@ -2,7 +2,6 @@ package myapp.com.bookstore.model;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Builder;
 import lombok.Data;
 
@@ -23,8 +22,6 @@ public class BookDTO {
     @NotBlank
     private String title;
 
-    @PositiveOrZero
-    @NotNull
     private BigDecimal price;
     public BookGenre bookGenre;
     private Set<String> authors;
@@ -32,8 +29,5 @@ public class BookDTO {
     private LocalDateTime createdDate;
     private LocalDateTime updateDate;
 
-    public enum BookGenre {
-        FICTION, DRAMA, ROMANCE, SCIENCE_FICTION, FANTASY, HORROR, DOCUMENTARY, PSYCHOLOGICAL, POETRY, THRILLER, HISTORICAL_FICTION, BIOGRAPHY, MYSTERY, SCIENCE
-    }
 }
 
