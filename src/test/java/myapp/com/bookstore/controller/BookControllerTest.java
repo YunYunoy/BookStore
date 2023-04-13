@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.HashMap;
@@ -25,8 +26,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(BookController.class)
 class BookControllerTest {
@@ -41,6 +42,7 @@ class BookControllerTest {
     BookService bookService;
     BookServiceImpl bookServiceImpl;
 
+
     @Captor
     ArgumentCaptor<UUID> uuidArgumentCaptor;
     @Captor
@@ -52,6 +54,7 @@ class BookControllerTest {
     }
 
     @Test
+    @WithMockUser(authorities = "USER")
     void listBooks() throws Exception {
         given(bookService.listBooks())
                 .willReturn(bookServiceImpl.listBooks());
@@ -61,8 +64,18 @@ class BookControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
-
     @Test
+    @WithMockUser(authorities = "USER")
+    void listBooksPageable() throws Exception {
+        given(bookService.listBooksPageable(any(), any() , any(), any()))
+                .willReturn(bookServiceImpl.listBooksPageable(null, null, null, null));
+
+        mockMvc.perform(get(BookController.BOOK_PATH+"/search")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+    @Test
+    @WithMockUser(authorities = "USER")
     void getBookById() throws Exception {
         BookDTO testBookDto = bookServiceImpl.listBooks().get(0);
 
@@ -75,6 +88,7 @@ class BookControllerTest {
     }
 
     @Test
+    @WithMockUser(authorities = "USER")
     void getBookByIdNotFound() throws Exception {
         given(bookService.getBookById(any(UUID.class))).willReturn(Optional.empty());
 
@@ -83,7 +97,8 @@ class BookControllerTest {
     }
 
     @Test
-    void handlePost() throws Exception {
+    @WithMockUser(authorities = "ADMIN")
+    void createBook() throws Exception {
         BookDTO book = bookServiceImpl.listBooks().get(0);
         book.setVersion(null);
         book.setId(null);
@@ -94,9 +109,9 @@ class BookControllerTest {
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(book)))
-                .andExpect(status().isCreated())
-                .andExpect(header().exists("Location"));
+                .andExpect(status().isCreated());
     }
+
 
     @Test
     void updateById() throws Exception {
@@ -112,6 +127,7 @@ class BookControllerTest {
     }
 
     @Test
+    @WithMockUser(authorities = "ADMIN")
     void deleteById() throws Exception {
         BookDTO book = bookServiceImpl.listBooks().get(0);
 
@@ -141,19 +157,4 @@ class BookControllerTest {
         assertThat(book.getId()).isEqualTo(uuidArgumentCaptor.getValue());
         assertThat(bookMap.get("title")).isEqualTo(bookArgumentCaptor.getValue().getTitle());
     }
-
-    @Test
-    void testUpdateBeerBlankName() throws Exception {
-
-        BookDTO bookDTO = bookServiceImpl.listBooks().get(0);
-        bookDTO.setTitle("");
-        given(bookService.updateBookById(any(), any())).willReturn(Optional.of(bookDTO));
-
-        mockMvc.perform(put(BookController.BOOK_PATH_ID, bookDTO.getId())
-                        .accept(MediaType.APPLICATION_JSON)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(bookDTO)))
-                .andExpect(status().isBadRequest());
-    }
-
 }

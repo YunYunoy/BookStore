@@ -1,9 +1,8 @@
 package myapp.com.bookstore.services;
 
-import myapp.com.bookstore.entity.Book;
-import myapp.com.bookstore.mappers.BookMapper;
 import myapp.com.bookstore.model.BookDTO;
 import lombok.extern.slf4j.Slf4j;
+import myapp.com.bookstore.model.BookGenre;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -25,7 +24,7 @@ public class BookServiceImpl implements BookService {
         BookDTO book1 = BookDTO.builder()
                 .id(UUID.randomUUID())
                 .version(1)
-                .bookGenre(BookDTO.BookGenre.FANTASY)
+                .bookGenre(BookGenre.FANTASY)
                 .title("Witcher")
                 .authors(new HashSet<>(Arrays.asList("Andrzej Sapkowski", "CD Projekt RED")))
                 .publisher("Publisher 1")
@@ -36,7 +35,7 @@ public class BookServiceImpl implements BookService {
         BookDTO book2 = BookDTO.builder()
                 .id(UUID.randomUUID())
                 .version(1)
-                .bookGenre(BookDTO.BookGenre.SCIENCE)
+                .bookGenre(BookGenre.SCIENCE)
                 .title("Effective Java")
                 .authors(new HashSet<>(Arrays.asList("Joshua Bloch")))
                 .publisher("Publisher 2")
@@ -47,7 +46,7 @@ public class BookServiceImpl implements BookService {
         BookDTO book3 = BookDTO.builder()
                 .id(UUID.randomUUID())
                 .version(1)
-                .bookGenre(BookDTO.BookGenre.HORROR)
+                .bookGenre(BookGenre.HORROR)
                 .title("IT")
                 .authors(new HashSet<>(Arrays.asList("Stephen King")))
                 .publisher("Publisher 3")
@@ -134,7 +133,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Page<BookDTO> findAllPageable(Pageable pageable) {
+    public Page<BookDTO> listBooksPageable(String title, BookGenre bookGenre, Integer pageNumber, Integer pageSize) {
         return new PageImpl<>(new ArrayList<>(bookMap.values()));
     }
 }

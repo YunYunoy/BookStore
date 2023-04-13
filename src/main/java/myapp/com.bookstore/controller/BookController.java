@@ -1,109 +1,78 @@
 package myapp.com.bookstore.controller;
 
-import myapp.com.bookstore.mappers.BookMapper;
-import myapp.com.bookstore.model.BookDTO;
-import myapp.com.bookstore.model.BookDTOModelAssembler;
-import myapp.com.bookstore.services.BookService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import myapp.com.bookstore.model.BookDTO;
+import myapp.com.bookstore.model.BookGenre;
+import myapp.com.bookstore.services.BookService;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.EntityModel;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.print.Book;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.*;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 
 @Slf4j
 @AllArgsConstructor
 @RestController
-@RequestMapping
 public class BookController {
 
     private final BookService bookService;
-    private final BookDTOModelAssembler assembler;
-    private final BookMapper bookMapper;
 
     public static final String BOOK_PATH = "/api/v1/books";
     public static final String BOOK_PATH_ID = BOOK_PATH + "/{bookId}";
 
 
     @GetMapping(BOOK_PATH)
-    public ResponseEntity<CollectionModel<EntityModel<BookDTO>>> listBooks() {
-        List<EntityModel<BookDTO>> books = bookService.listBooks().stream()
-                .map(assembler::toModel)
-                .toList();
-        if (books.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.ok(CollectionModel.of(books));
-        }
+    @PreAuthorize("hasAuthority('USER')")
+    public List<BookDTO> listBooks() {
+        return bookService.listBooks();
     }
 
-    @GetMapping(BOOK_PATH+"/search")
-    public ResponseEntity<CollectionModel<EntityModel<BookDTO>>> searchBooks2(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size,
-            @RequestParam(defaultValue = "title") String sortBy) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
-        List<EntityModel<BookDTO>> books = bookService.findAllPageable(pageable).stream()
-                .map(assembler::toModel)
-                .toList();
-        if (books.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.ok(CollectionModel.of(books));
-        }
+    @GetMapping(BOOK_PATH + "/search")
+    @PreAuthorize("hasAuthority('USER')")
+    public Page<BookDTO> listBooksPageable(@RequestParam(required = false) String title,
+                                           @RequestParam(required = false) BookGenre bookGenre,
+                                           @RequestParam(required = false) Integer pageNumber,
+                                           @RequestParam(required = false) Integer pageSize) {
+        return bookService.listBooksPageable(title, bookGenre, pageNumber, pageSize);
     }
 
 
     @GetMapping(BOOK_PATH_ID)
-    public ResponseEntity<EntityModel<BookDTO>> getBookById(@PathVariable("bookId") UUID bookId) {
-        Optional<BookDTO> bookDTO = bookService.getBookById(bookId);
-        if (bookDTO.isPresent()) {
-            EntityModel<BookDTO> bookEntityModel = assembler.toModel(bookDTO.get());
-            return ResponseEntity.ok(bookEntityModel);
-        } else {
-            throw new NotFoundException("Book not found with id: " + bookId);
-        }
+    @PreAuthorize("hasAuthority('USER')")
+    public BookDTO getBookById(@PathVariable("bookId") UUID bookId) {
+        return bookService.getBookById(bookId)
+                .orElseThrow(NotFoundException::new);
     }
 
     @PostMapping(BOOK_PATH)
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity handlePost(@Validated @RequestBody BookDTO book) {
         BookDTO savedBook = bookService.saveNewBook(book);
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Location", BOOK_PATH + "/" + savedBook.getId().toString());
-        return new ResponseEntity(headers, HttpStatus.CREATED);
+        return new ResponseEntity(savedBook, HttpStatus.CREATED);
     }
 
     @PutMapping(BOOK_PATH_ID)
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity updateById(@PathVariable("bookId") UUID bookId, @Validated @RequestBody BookDTO book) {
         bookService.updateBookById(bookId, book);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping(BOOK_PATH_ID)
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity deleteById(@PathVariable("bookId") UUID bookId) {
         bookService.deleteBookById(bookId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @PatchMapping(BOOK_PATH_ID)
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity updateBookPatchById(@PathVariable("bookId") UUID bookId, @Validated @RequestBody BookDTO book) {
         bookService.patchBookById(bookId, book);
         return new ResponseEntity(HttpStatus.NO_CONTENT);

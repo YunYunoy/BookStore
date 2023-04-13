@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.HashMap;
@@ -21,7 +22,6 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
@@ -55,6 +55,7 @@ class CustomerControllerTest {
     ArgumentCaptor<CustomerDTO> customerArgumentCaptor;
 
     @Test
+    @WithMockUser(authorities = "ADMIN")
     void testPatchCustomer() throws Exception {
         CustomerDTO customer = customerServiceImpl.listCustomers().get(0);
 
@@ -75,6 +76,7 @@ class CustomerControllerTest {
     }
 
     @Test
+    @WithMockUser(authorities = "ADMIN")
     void testDeleteCustomer() throws Exception {
         CustomerDTO customer = customerServiceImpl.listCustomers().get(0);
 
@@ -88,6 +90,7 @@ class CustomerControllerTest {
     }
 
     @Test
+    @WithMockUser(authorities = "ADMIN")
     void testUpdateCustomer() throws Exception {
         CustomerDTO customer = customerServiceImpl.listCustomers().get(0);
 
@@ -103,6 +106,7 @@ class CustomerControllerTest {
     }
 
     @Test
+    @WithMockUser(authorities = "ADMIN")
     void testCreateCustomer() throws Exception {
         CustomerDTO customer = customerServiceImpl.listCustomers().get(0);
         customer.setId(null);
@@ -119,6 +123,7 @@ class CustomerControllerTest {
     }
 
     @Test
+    @WithMockUser(authorities = "ADMIN")
     void listAllCustomers() throws Exception {
         given(customerService.listCustomers()).willReturn(customerServiceImpl.listCustomers());
 
@@ -130,6 +135,7 @@ class CustomerControllerTest {
     }
 
     @Test
+    @WithMockUser(authorities = "ADMIN")
     void getCustomerById() throws Exception {
         CustomerDTO customer = customerServiceImpl.listCustomers().get(0);
 
