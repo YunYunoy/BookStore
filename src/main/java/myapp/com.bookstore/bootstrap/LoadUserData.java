@@ -4,6 +4,7 @@ import myapp.com.bookstore.security.entity.User;
 import myapp.com.bookstore.security.entity.Role;
 import myapp.com.bookstore.security.repository.RoleRepository;
 import myapp.com.bookstore.security.repository.UserRepository;
+import myapp.com.bookstore.security.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -19,11 +20,13 @@ public class LoadUserData implements ApplicationRunner {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final UserDetailsServiceImpl userDetailsService;
 
     @Autowired
-    public LoadUserData(UserRepository userRepository, RoleRepository roleRepository) {
+    public LoadUserData(UserRepository userRepository, RoleRepository roleRepository, UserDetailsServiceImpl userDetailsService) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.userDetailsService = userDetailsService;
     }
 
     @Override
