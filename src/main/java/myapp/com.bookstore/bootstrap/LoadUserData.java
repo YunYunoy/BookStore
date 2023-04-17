@@ -1,60 +1,58 @@
 package myapp.com.bookstore.bootstrap;
 
+import lombok.extern.slf4j.Slf4j;
+
 import myapp.com.bookstore.security.entity.User;
-import myapp.com.bookstore.security.entity.Role;
-import myapp.com.bookstore.security.repository.RoleRepository;
+import myapp.com.bookstore.security.entity.Authority;
+import myapp.com.bookstore.security.repository.AuthorityRepository;
 import myapp.com.bookstore.security.repository.UserRepository;
-import myapp.com.bookstore.security.service.UserDetailsServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-
 @Component
+@Slf4j
 public class LoadUserData implements ApplicationRunner {
 
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
-    private final UserDetailsServiceImpl userDetailsService;
+    private final AuthorityRepository authorityRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    public LoadUserData(UserRepository userRepository, RoleRepository roleRepository, UserDetailsServiceImpl userDetailsService) {
+    public LoadUserData(UserRepository userRepository, AuthorityRepository authorityRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.userDetailsService = userDetailsService;
+        this.authorityRepository = authorityRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public void run(ApplicationArguments args) {
-        Role userRole = new Role();
-        userRole.setName("USER");
+        loadSecurityData();
+    }
 
-        Role adminRole = new Role();
-        adminRole.setName("ADMIN");
+    private void loadSecurityData() {
+        Authority admin = authorityRepository.save(Authority.builder().role("ADMIN").build());
+        Authority userRole = authorityRepository.save(Authority.builder().role("USER").build());
+        Authority customer = authorityRepository.save(Authority.builder().role("CUSTOMER").build());
 
-        roleRepository.saveAll(Arrays.asList(userRole, adminRole));
+        userRepository.save(User.builder()
+                .username("admin")
+                .password(passwordEncoder.encode("admin"))
+                .authority(admin)
+                .build());
 
-        User user = new User();
-        user.setUsername("user");
-        user.setEmail("user@gmail.com");
-        user.setPassword(new BCryptPasswordEncoder().encode("password"));
-        user.setRoles(Collections.singleton(userRole));
+        userRepository.save(User.builder()
+                .username("user")
+                .password(passwordEncoder.encode("user"))
+                .authority(userRole)
+                .build());
 
-        User admin = new User();
-        admin.setUsername("admin");
-        admin.setEmail("admin@gmail.com");
-        admin.setPassword(new BCryptPasswordEncoder().encode("password"));
-        admin.setRoles(new HashSet<>(Arrays.asList(userRole, adminRole)));
+        userRepository.save(User.builder()
+                .username("customer")
+                .password(passwordEncoder.encode("customer"))
+                .authority(customer)
+                .build());
 
-        userRepository.saveAll(Arrays.asList(user, admin));
-
-        System.out.println("users: " + userRepository.count() + "\n" +
-                userRepository.findByUsername(user.getUsername()).toString() + "\n" +
-                userRepository.findByUsername(admin.getUsername()).toString());
+        log.debug("Users Loaded: " + userRepository.count());
     }
 }
