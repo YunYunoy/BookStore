@@ -19,7 +19,7 @@ import java.util.UUID;
 @RequestMapping
 public class CustomerController {
 
-    public static final String CUSTOMER_PATH = "/api/v1/customer";
+    public static final String CUSTOMER_PATH = "/api/v3/customer";
     public static final String CUSTOMER_PATH_ID = CUSTOMER_PATH + "/{id}";
 
     private final CustomerService customerService;

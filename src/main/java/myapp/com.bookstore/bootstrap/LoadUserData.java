@@ -1,5 +1,6 @@
 package myapp.com.bookstore.bootstrap;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import myapp.com.bookstore.security.entity.User;
@@ -13,17 +14,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class LoadUserData implements ApplicationRunner {
 
     private final UserRepository userRepository;
     private final AuthorityRepository authorityRepository;
     private final PasswordEncoder passwordEncoder;
-
-    public LoadUserData(UserRepository userRepository, AuthorityRepository authorityRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.authorityRepository = authorityRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     @Override
     public void run(ApplicationArguments args) {
@@ -31,15 +27,9 @@ public class LoadUserData implements ApplicationRunner {
     }
 
     private void loadSecurityData() {
-        Authority admin = authorityRepository.save(Authority.builder().role("ADMIN").build());
-        Authority userRole = authorityRepository.save(Authority.builder().role("USER").build());
-        Authority customer = authorityRepository.save(Authority.builder().role("CUSTOMER").build());
-
-        userRepository.save(User.builder()
-                .username("admin")
-                .password(passwordEncoder.encode("admin"))
-                .authority(admin)
-                .build());
+        Authority admin = authorityRepository.save(Authority.builder().role("ROLE_ADMIN").build());
+        Authority userRole = authorityRepository.save(Authority.builder().role("ROLE_USER").build());
+        Authority employee = authorityRepository.save(Authority.builder().role("ROLE_EMPLOYEE").build());
 
         userRepository.save(User.builder()
                 .username("user")
@@ -48,9 +38,15 @@ public class LoadUserData implements ApplicationRunner {
                 .build());
 
         userRepository.save(User.builder()
-                .username("customer")
-                .password(passwordEncoder.encode("customer"))
-                .authority(customer)
+                .username("admin")
+                .password(passwordEncoder.encode("admin"))
+                .authority(admin)
+                .build());
+
+        userRepository.save(User.builder()
+                .username("employee")
+                .password(passwordEncoder.encode("employee"))
+                .authority(employee)
                 .build());
 
         log.debug("Users Loaded: " + userRepository.count());

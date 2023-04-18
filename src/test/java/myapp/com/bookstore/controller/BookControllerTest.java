@@ -3,6 +3,7 @@ package myapp.com.bookstore.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import myapp.com.bookstore.model.BookDTO;
+import myapp.com.bookstore.security.config.SecurityConfig;
 import myapp.com.bookstore.services.BookService;
 import myapp.com.bookstore.services.BookServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,6 +13,7 @@ import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -25,11 +27,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(BookController.class)
+@Import(SecurityConfig.class)
 class BookControllerTest {
 
     @Autowired
@@ -60,7 +64,8 @@ class BookControllerTest {
                 .willReturn(bookServiceImpl.listBooks());
 
         mockMvc.perform(get(BookController.BOOK_PATH)
-                        .accept(MediaType.APPLICATION_JSON))
+                        .accept(MediaType.APPLICATION_JSON)
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
@@ -97,7 +102,7 @@ class BookControllerTest {
     }
 
     @Test
-    @WithMockUser(authorities = "ADMIN")
+    @WithMockUser(authorities = "ROLE_ADMIN")
     void createBook() throws Exception {
         BookDTO book = bookServiceImpl.listBooks().get(0);
         book.setVersion(null);
@@ -107,6 +112,7 @@ class BookControllerTest {
 
         mockMvc.perform(post(BookController.BOOK_PATH)
                         .accept(MediaType.APPLICATION_JSON)
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(book)))
                 .andExpect(status().isCreated());
@@ -114,11 +120,13 @@ class BookControllerTest {
 
 
     @Test
+    @WithMockUser(authorities = "ROLE_ADMIN")
     void updateById() throws Exception {
         BookDTO book = bookServiceImpl.listBooks().get(0);
 
         mockMvc.perform(put(BookController.BOOK_PATH_ID, book.getId())
                         .accept(MediaType.APPLICATION_JSON)
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(book)))
                 .andExpect(status().isNoContent());
@@ -127,12 +135,13 @@ class BookControllerTest {
     }
 
     @Test
-    @WithMockUser(authorities = "ADMIN")
+    @WithMockUser(authorities = "ROLE_ADMIN")
     void deleteById() throws Exception {
         BookDTO book = bookServiceImpl.listBooks().get(0);
 
         mockMvc.perform(delete(BookController.BOOK_PATH_ID, book.getId())
-                        .accept(MediaType.APPLICATION_JSON))
+                        .accept(MediaType.APPLICATION_JSON)
+                        .with(csrf()))
                 .andExpect(status().isNoContent());
 
         verify(bookService).deleteBookById(uuidArgumentCaptor.capture());
@@ -140,6 +149,7 @@ class BookControllerTest {
     }
 
     @Test
+    @WithMockUser(authorities = "ROLE_ADMIN")
     void updateBookPatchById() throws Exception {
         BookDTO book = bookServiceImpl.listBooks().get(0);
 
@@ -149,6 +159,7 @@ class BookControllerTest {
         mockMvc.perform(patch(BookController.BOOK_PATH_ID, book.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
+                        .with(csrf())
                         .content(objectMapper.writeValueAsString(bookMap)))
                 .andExpect(status().isNoContent());
 
