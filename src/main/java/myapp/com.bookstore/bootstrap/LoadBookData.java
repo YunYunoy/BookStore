@@ -1,6 +1,7 @@
 package myapp.com.bookstore.bootstrap;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import myapp.com.bookstore.mappers.BookMapper;
 import myapp.com.bookstore.model.BookDTO;
 import myapp.com.bookstore.model.BookGenre;
@@ -13,6 +14,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class LoadBookData implements CommandLineRunner {
@@ -94,6 +96,6 @@ public class LoadBookData implements CommandLineRunner {
                 .price(new BigDecimal("17.99"))
                 .build()));
 
-        System.out.println("Books: " + bookRepository.count());
+        log.debug("Books Loaded: " + bookRepository.count());
     }
 }
