@@ -15,10 +15,11 @@ import java.util.UUID;
 @Builder
 public class BookOrder {
 
-    public BookOrder(UUID id, Long version, Customer customer, Timestamp createdCate, Timestamp updatedDate) {
+    public BookOrder(UUID id, Long version, Customer customer, Timestamp createdCate, Timestamp updatedDate, OrderStatus orderStatus) {
         this.id = id;
         this.version = version;
         this.setCustomer(customer);
+        this.orderStatus = orderStatus;
         this.createdCate = createdCate;
         this.updatedDate = updatedDate;
     }
@@ -37,6 +38,9 @@ public class BookOrder {
     private Timestamp createdCate;
     @UpdateTimestamp
     private Timestamp updatedDate;
+
+    @Enumerated
+    private OrderStatus orderStatus;
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
