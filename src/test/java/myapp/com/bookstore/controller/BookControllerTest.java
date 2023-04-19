@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -155,6 +156,7 @@ class BookControllerTest {
 
         Map<String, Object> bookMap = new HashMap<>();
         bookMap.put("title", "new title");
+        bookMap.put("price", new BigDecimal("15.00"));
 
         mockMvc.perform(patch(BookController.BOOK_PATH_ID, book.getId())
                         .contentType(MediaType.APPLICATION_JSON)

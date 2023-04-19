@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -28,6 +29,7 @@ public class BookServiceImpl implements BookService {
                 .title("Witcher")
                 .authors(new HashSet<>(Arrays.asList("Andrzej Sapkowski", "CD Projekt RED")))
                 .publisher("Publisher 1")
+                .price(new BigDecimal("20.00"))
                 .createdDate(LocalDateTime.now())
                 .updateDate(LocalDateTime.now())
                 .build();
@@ -38,6 +40,7 @@ public class BookServiceImpl implements BookService {
                 .bookGenre(BookGenre.SCIENCE)
                 .title("Effective Java")
                 .authors(new HashSet<>(Arrays.asList("Joshua Bloch")))
+                .price(new BigDecimal("30.00"))
                 .publisher("Publisher 2")
                 .createdDate(LocalDateTime.now())
                 .updateDate(LocalDateTime.now())
@@ -50,6 +53,7 @@ public class BookServiceImpl implements BookService {
                 .title("IT")
                 .authors(new HashSet<>(Arrays.asList("Stephen King")))
                 .publisher("Publisher 3")
+                .price(new BigDecimal("30.00"))
                 .createdDate(LocalDateTime.now())
                 .updateDate(LocalDateTime.now())
                 .build();

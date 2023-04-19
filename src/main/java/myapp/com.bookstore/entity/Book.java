@@ -18,8 +18,8 @@ import java.util.UUID;
 @Setter
 @Entity
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class Book {
 
     @Id
@@ -37,10 +37,11 @@ public class Book {
     @NotNull
     private String title;
 
+    @Positive
     @NotNull
     private BigDecimal price;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     public BookGenre bookGenre;
 
     @ElementCollection
