@@ -18,8 +18,14 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+
+    @Column(nullable = false, unique = true)
     private String username;
+
+    @Column(nullable = false, unique = true)
     private String password;
+
+    private String email;
 
     @Singular
     @ManyToMany(cascade = CascadeType.MERGE)

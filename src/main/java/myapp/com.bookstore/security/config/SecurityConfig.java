@@ -31,7 +31,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> {
                     authorize
                             .requestMatchers("/", "/webjars/**", "/login", "/resources/**").permitAll()
-                            .requestMatchers("/api/v2/**").permitAll()
+                            .requestMatchers(HttpMethod.POST,"/api/v2/auth/signup","/api/v2/auth/signin").anonymous()
                             .requestMatchers((new AntPathRequestMatcher("/h2-console/**"))).permitAll()
                             .requestMatchers(HttpMethod.GET, "/api/**").permitAll()
                             .requestMatchers("/api/v3/**").hasAnyRole("ADMIN", "EMPLOYEE")
