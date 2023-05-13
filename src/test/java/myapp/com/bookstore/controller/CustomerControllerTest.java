@@ -56,31 +56,6 @@ class CustomerControllerTest {
     @Captor
     ArgumentCaptor<UUID> uuidArgumentCaptor;
 
-    @Captor
-    ArgumentCaptor<CustomerDTO> customerArgumentCaptor;
-
-    @Test
-    void testPatchCustomer() throws Exception {
-        CustomerDTO customer = customerServiceImpl.listCustomers().get(0);
-
-        Map<String, Object> customerMap = new HashMap<>();
-        customerMap.put("name", "New Name");
-
-        mockMvc.perform(patch( CustomerController.CUSTOMER_PATH_ID, customer.getId())
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON)
-                        .with(csrf())
-                        .content(objectMapper.writeValueAsString(customerMap)))
-                .andExpect(status().isNoContent());
-
-        verify(customerService).patchCustomer(uuidArgumentCaptor.capture(),
-                customerArgumentCaptor.capture());
-
-        assertThat(uuidArgumentCaptor.getValue()).isEqualTo(customer.getId());
-        assertThat(customerArgumentCaptor.getValue().getName())
-                .isEqualTo(customerMap.get("name"));
-    }
-
     @Test
     void testDeleteCustomer() throws Exception {
         CustomerDTO customer = customerServiceImpl.listCustomers().get(0);

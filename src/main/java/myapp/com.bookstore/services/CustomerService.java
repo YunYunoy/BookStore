@@ -18,5 +18,4 @@ public interface CustomerService {
 
     Optional<CustomerDTO> updateCustomerById(UUID id, CustomerDTO customer);
 
-    void patchCustomer(UUID id, CustomerDTO customer);
 }

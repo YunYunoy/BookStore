@@ -55,11 +55,6 @@ public class CustomerController {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
-    @PatchMapping(CUSTOMER_PATH_ID)
-    public ResponseEntity patchCustomerById(@PathVariable("id") UUID id, @RequestBody CustomerDTO customer) {
-        customerService.patchCustomer(id, customer);
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
-    }
 }
 
 
