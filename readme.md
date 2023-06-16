@@ -99,7 +99,7 @@ http://localhost:8080/swagger-ui.html
 
 ### OpenApi Screenshots
 
-![img.png](img.png)
+![img.png](img/img.png)
 
 ## Security 
 
@@ -111,11 +111,11 @@ Application utilizes method-level security and for full accessibility please use
 
 ## Postman Examples
 
-![img_1.png](img_1.png)
+![img_1.png](img/img_1.png)
 
-![img_2.png](img_2.png)
+![img_2.png](img/img_2.png)
 
-![img_3.png](img_3.png)
+![img_3.png](img/img_3.png)
 
 ## Project Structure
 
