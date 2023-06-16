@@ -1,4 +1,4 @@
-package myapp.com.bookstore.entity;
+package myapp.com.bookstore.enums;
 
 public enum OrderStatus {
     PENDING("Pending"),

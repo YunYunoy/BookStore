@@ -1,4 +1,4 @@
-package myapp.com.bookstore.security.config;
+package myapp.com.bookstore.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -2,7 +2,7 @@ package myapp.com.bookstore.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import myapp.com.bookstore.model.CustomerDTO;
-import myapp.com.bookstore.security.config.SecurityConfig;
+import myapp.com.bookstore.config.SecurityConfig;
 import myapp.com.bookstore.services.CustomerService;
 import myapp.com.bookstore.services.CustomerServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,8 +17,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 

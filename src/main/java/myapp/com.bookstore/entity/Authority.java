@@ -1,4 +1,4 @@
-package myapp.com.bookstore.security.entity;
+package myapp.com.bookstore.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

@@ -1,8 +1,9 @@
-package myapp.com.bookstore.security.entity;
+package myapp.com.bookstore.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.*;
+import myapp.com.bookstore.entity.Authority;
 
 import java.util.Set;
 

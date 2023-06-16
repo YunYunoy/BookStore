@@ -1,4 +1,4 @@
-package myapp.com.bookstore.security.entity;
+package myapp.com.bookstore.model;
 
 import lombok.Data;
 

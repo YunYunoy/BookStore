@@ -1,10 +1,10 @@
-package myapp.com.bookstore.security.service;
+package myapp.com.bookstore.services;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import myapp.com.bookstore.security.entity.Authority;
-import myapp.com.bookstore.security.entity.User;
-import myapp.com.bookstore.security.repository.UserRepository;
+import myapp.com.bookstore.entity.Authority;
+import myapp.com.bookstore.entity.User;
+import myapp.com.bookstore.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

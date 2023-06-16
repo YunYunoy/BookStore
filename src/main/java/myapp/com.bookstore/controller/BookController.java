@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import myapp.com.bookstore.model.BookDTO;
 import myapp.com.bookstore.model.BookGenre;
 import myapp.com.bookstore.services.BookService;
+import myapp.com.bookstore.utils.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

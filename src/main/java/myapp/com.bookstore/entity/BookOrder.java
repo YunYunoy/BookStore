@@ -2,6 +2,7 @@ package myapp.com.bookstore.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import myapp.com.bookstore.enums.OrderStatus;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 

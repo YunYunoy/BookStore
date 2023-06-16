@@ -3,10 +3,10 @@ package myapp.com.bookstore.bootstrap;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import myapp.com.bookstore.security.entity.User;
-import myapp.com.bookstore.security.entity.Authority;
-import myapp.com.bookstore.security.repository.AuthorityRepository;
-import myapp.com.bookstore.security.repository.UserRepository;
+import myapp.com.bookstore.entity.User;
+import myapp.com.bookstore.entity.Authority;
+import myapp.com.bookstore.repository.AuthorityRepository;
+import myapp.com.bookstore.repository.UserRepository;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;

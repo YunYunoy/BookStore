@@ -1,12 +1,12 @@
-package myapp.com.bookstore.security.controller;
+package myapp.com.bookstore.controller;
 
 import lombok.AllArgsConstructor;
-import myapp.com.bookstore.security.entity.Authority;
-import myapp.com.bookstore.security.entity.LoginDTO;
-import myapp.com.bookstore.security.entity.SignUpDTO;
-import myapp.com.bookstore.security.entity.User;
-import myapp.com.bookstore.security.repository.AuthorityRepository;
-import myapp.com.bookstore.security.repository.UserRepository;
+import myapp.com.bookstore.entity.Authority;
+import myapp.com.bookstore.model.LoginDTO;
+import myapp.com.bookstore.model.SignUpDTO;
+import myapp.com.bookstore.entity.User;
+import myapp.com.bookstore.repository.AuthorityRepository;
+import myapp.com.bookstore.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

@@ -3,7 +3,7 @@ package myapp.com.bookstore.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import myapp.com.bookstore.model.BookDTO;
-import myapp.com.bookstore.security.config.SecurityConfig;
+import myapp.com.bookstore.config.SecurityConfig;
 import myapp.com.bookstore.services.BookService;
 import myapp.com.bookstore.services.BookServiceImpl;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,6 +1,6 @@
-package myapp.com.bookstore.security.repository;
+package myapp.com.bookstore.repository;
 
-import myapp.com.bookstore.security.entity.Authority;
+import myapp.com.bookstore.entity.Authority;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
