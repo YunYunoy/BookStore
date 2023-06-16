@@ -3,8 +3,8 @@ package myapp.com.bookstore.bootstrap;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import myapp.com.bookstore.entity.User;
-import myapp.com.bookstore.entity.Authority;
+import myapp.com.bookstore.auth.User;
+import myapp.com.bookstore.auth.Authority;
 import myapp.com.bookstore.repository.AuthorityRepository;
 import myapp.com.bookstore.repository.UserRepository;
 import org.springframework.boot.ApplicationArguments;

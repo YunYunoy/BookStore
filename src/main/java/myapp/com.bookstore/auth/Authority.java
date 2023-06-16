@@ -1,7 +1,8 @@
-package myapp.com.bookstore.entity;
+package myapp.com.bookstore.auth;
 
 import jakarta.persistence.*;
 import lombok.*;
+import myapp.com.bookstore.auth.User;
 
 import java.util.Set;
 

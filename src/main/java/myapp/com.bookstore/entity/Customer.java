@@ -1,9 +1,6 @@
 package myapp.com.bookstore.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
@@ -29,20 +26,22 @@ public class Customer {
     @Column(length = 36, columnDefinition = "varchar", updatable = false,nullable = false)
     private UUID id;
 
-    @NotBlank
-    @NotNull
+
+    @Column(name = "name")
     private String name;
 
     @Version
+    @Column(name = "version")
     private Integer version;
 
-    @Email
+    @Column(name = "email")
     private String email;
 
-    @Column(updatable = false)
+    @Column(name = "created_date", updatable = false)
     @CreationTimestamp
     private LocalDateTime createdDate;
 
+    @Column(name = "update_date")
     @UpdateTimestamp
     private LocalDateTime updateDate;
 

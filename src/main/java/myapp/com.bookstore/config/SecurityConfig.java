@@ -31,6 +31,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> {
                     authorize
                             .requestMatchers("/", "/webjars/**", "/login", "/resources/**").permitAll()
+                            .requestMatchers(HttpMethod.POST,"/api/v2/auth/signup").permitAll()
+                            .requestMatchers(HttpMethod.POST,"/api/v2/auth/signin").permitAll()
                             .requestMatchers("/v3/api-docs","/v3/api-docs/**","/swagger-ui/**","/swagger-ui.html").permitAll()
                             .requestMatchers(HttpMethod.POST,"/api/v2/auth/signup","/api/v2/auth/signin").permitAll()
                             .requestMatchers((new AntPathRequestMatcher("/h2-console/**"))).permitAll()

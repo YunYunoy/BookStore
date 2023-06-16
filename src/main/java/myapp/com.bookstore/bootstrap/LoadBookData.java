@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import myapp.com.bookstore.mappers.BookMapper;
 import myapp.com.bookstore.model.BookDTO;
-import myapp.com.bookstore.model.BookGenre;
+import myapp.com.bookstore.enums.BookGenre;
 import myapp.com.bookstore.repository.BookRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -25,7 +25,6 @@ public class LoadBookData implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         bookRepository.save(bookMapper.bookDTOToBook(BookDTO.builder()
-                .version(1)
                 .bookGenre(BookGenre.FANTASY)
                 .title("Witcher")
                 .authors(new HashSet<>(Arrays.asList("Andrzej Sapkowski", "CD Projekt RED")))
@@ -34,7 +33,46 @@ public class LoadBookData implements CommandLineRunner {
                 .build()));
 
         bookRepository.save(bookMapper.bookDTOToBook(BookDTO.builder()
-                .version(1)
+                .bookGenre(BookGenre.FANTASY)
+                .title("Harry Potter and the Sorcerer's Stone")
+                .authors(new HashSet<>(Arrays.asList("J.K. Rowling")))
+                .publisher("Bloomsbury Publishing")
+                .price(new BigDecimal("24.99"))
+                .build()));
+
+        bookRepository.save(bookMapper.bookDTOToBook(BookDTO.builder()
+                .bookGenre(BookGenre.FANTASY)
+                .title("The Hobbit")
+                .authors(new HashSet<>(Arrays.asList("J.R.R. Tolkien")))
+                .publisher("George Allen & Unwin")
+                .price(new BigDecimal("19.99"))
+                .build()));
+
+        bookRepository.save(bookMapper.bookDTOToBook(BookDTO.builder()
+                .bookGenre(BookGenre.FANTASY)
+                .title("A Game of Thrones")
+                .authors(new HashSet<>(Arrays.asList("George R.R. Martin")))
+                .publisher("Bantam Spectra")
+                .price(new BigDecimal("29.99"))
+                .build()));
+
+        bookRepository.save(bookMapper.bookDTOToBook(BookDTO.builder()
+                .bookGenre(BookGenre.FANTASY)
+                .title("The Name of the Wind")
+                .authors(new HashSet<>(Arrays.asList("Patrick Rothfuss")))
+                .publisher("DAW Books")
+                .price(new BigDecimal("26.99"))
+                .build()));
+
+        bookRepository.save(bookMapper.bookDTOToBook(BookDTO.builder()
+                .bookGenre(BookGenre.FANTASY)
+                .title("The Chronicles of Narnia")
+                .authors(new HashSet<>(Arrays.asList("C.S. Lewis")))
+                .publisher("Geoffrey Bles")
+                .price(new BigDecimal("22.99"))
+                .build()));
+
+        bookRepository.save(bookMapper.bookDTOToBook(BookDTO.builder()
                 .bookGenre(BookGenre.ROMANCE)
                 .title("The Notebook")
                 .authors(new HashSet<>(List.of("Nicholas Sparks")))
@@ -43,7 +81,6 @@ public class LoadBookData implements CommandLineRunner {
                 .build()));
 
         bookRepository.save(bookMapper.bookDTOToBook(BookDTO.builder()
-                .version(1)
                 .bookGenre(BookGenre.MYSTERY)
                 .title("The Da Vinci Code")
                 .authors(new HashSet<>(List.of("Dan Brown")))
@@ -52,7 +89,6 @@ public class LoadBookData implements CommandLineRunner {
                 .build()));
 
         bookRepository.save(bookMapper.bookDTOToBook(BookDTO.builder()
-                .version(1)
                 .bookGenre(BookGenre.HORROR)
                 .title("It")
                 .authors(new HashSet<>(List.of("Stephen King")))
@@ -61,7 +97,6 @@ public class LoadBookData implements CommandLineRunner {
                 .build()));
 
         bookRepository.save(bookMapper.bookDTOToBook(BookDTO.builder()
-                .version(1)
                 .bookGenre(BookGenre.SCIENCE_FICTION)
                 .title("Dune")
                 .authors(new HashSet<>(List.of("Frank Herbert")))
@@ -70,7 +105,6 @@ public class LoadBookData implements CommandLineRunner {
                 .build()));
 
         bookRepository.save(bookMapper.bookDTOToBook(BookDTO.builder()
-                .version(1)
                 .bookGenre(BookGenre.BIOGRAPHY)
                 .title("Steve Jobs")
                 .authors(new HashSet<>(List.of("Walter Isaacson")))
@@ -79,7 +113,6 @@ public class LoadBookData implements CommandLineRunner {
                 .build()));
 
         bookRepository.save(bookMapper.bookDTOToBook(BookDTO.builder()
-                .version(1)
                 .bookGenre(BookGenre.HISTORICAL_FICTION)
                 .title("The Pillars of the Earth")
                 .authors(new HashSet<>(List.of("Ken Follett")))
@@ -88,7 +121,6 @@ public class LoadBookData implements CommandLineRunner {
                 .build()));
 
         bookRepository.save(bookMapper.bookDTOToBook(BookDTO.builder()
-                .version(1)
                 .bookGenre(BookGenre.THRILLER)
                 .title("The Girl on the Train")
                 .authors(new HashSet<>(List.of("Paula Hawkins")))

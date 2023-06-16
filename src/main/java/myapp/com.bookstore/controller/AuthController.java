@@ -1,10 +1,10 @@
 package myapp.com.bookstore.controller;
 
 import lombok.AllArgsConstructor;
-import myapp.com.bookstore.entity.Authority;
+import myapp.com.bookstore.auth.Authority;
 import myapp.com.bookstore.model.LoginDTO;
 import myapp.com.bookstore.model.SignUpDTO;
-import myapp.com.bookstore.entity.User;
+import myapp.com.bookstore.auth.User;
 import myapp.com.bookstore.repository.AuthorityRepository;
 import myapp.com.bookstore.repository.UserRepository;
 import org.springframework.http.HttpStatus;
@@ -44,17 +44,13 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody SignUpDTO signUpDTO){
 
-        // add check for username exists in a DB
         if(userRepository.existsByUsername(signUpDTO.getName())){
             return new ResponseEntity<>("Username is already taken!", HttpStatus.BAD_REQUEST);
         }
 
-        // add check for email exists in DB
         if(userRepository.existsByEmail(signUpDTO.getEmail())){
             return new ResponseEntity<>("Email is already taken!", HttpStatus.BAD_REQUEST);
         }
-
-        // create user object
 
         Authority authority = authorityRepository.findByRole("ROLE_USER").get();
 

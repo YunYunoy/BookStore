@@ -1,9 +1,8 @@
 package myapp.com.bookstore.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 import lombok.*;
-import myapp.com.bookstore.model.BookGenre;
+import myapp.com.bookstore.enums.BookGenre;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -20,6 +19,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Book {
 
     @Id
@@ -29,28 +29,31 @@ public class Book {
     private UUID id;
 
     @Version
+    @Column(name = "version")
     private Integer version;
+
+    @Column(name = "isbn")
     private String isbn;
 
-
-    @NotBlank
-    @NotNull
+    @Column(name = "title")
     private String title;
 
-    @Positive
-    @NotNull
+    @Column(name = "price")
     private BigDecimal price;
 
+    @Column(name = "book_genre")
     @Enumerated(EnumType.STRING)
     public BookGenre bookGenre;
 
     @ElementCollection
+    @Column(name = "authors")
     private Set<String> authors = new HashSet<>();
 
-
+    @Column(name = "publisher")
     private String publisher;
 
     @CreationTimestamp
+    @Column(updatable = false)
     private LocalDateTime createdDate;
 
     @UpdateTimestamp

@@ -1,9 +1,7 @@
-package myapp.com.bookstore.entity;
+package myapp.com.bookstore.auth;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import lombok.*;
-import myapp.com.bookstore.entity.Authority;
 
 import java.util.Set;
 
@@ -24,11 +22,10 @@ public class User {
     @Column(nullable = false, unique = true)
     private String username;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String password;
 
     @Column(unique = true)
-    @Email
     private String email;
 
     @Singular

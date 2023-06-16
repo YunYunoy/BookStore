@@ -2,10 +2,9 @@ package myapp.com.bookstore.services;
 
 import myapp.com.bookstore.model.BookDTO;
 import lombok.extern.slf4j.Slf4j;
-import myapp.com.bookstore.model.BookGenre;
+import myapp.com.bookstore.enums.BookGenre;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -39,7 +38,7 @@ public class BookServiceImpl implements BookService {
                 .version(1)
                 .bookGenre(BookGenre.SCIENCE)
                 .title("Effective Java")
-                .authors(new HashSet<>(Arrays.asList("Joshua Bloch")))
+                .authors(new HashSet<>(List.of("Joshua Bloch")))
                 .price(new BigDecimal("30.00"))
                 .publisher("Publisher 2")
                 .createdDate(LocalDateTime.now())
@@ -51,7 +50,7 @@ public class BookServiceImpl implements BookService {
                 .version(1)
                 .bookGenre(BookGenre.HORROR)
                 .title("IT")
-                .authors(new HashSet<>(Arrays.asList("Stephen King")))
+                .authors(new HashSet<>(List.of("Stephen King")))
                 .publisher("Publisher 3")
                 .price(new BigDecimal("30.00"))
                 .createdDate(LocalDateTime.now())
@@ -131,9 +130,7 @@ public class BookServiceImpl implements BookService {
         if (book.getIsbn() != null) {
             savedBook.setIsbn(book.getIsbn());
         }
-        if (book.getPrice() != null) {
-            savedBook.setPrice(book.getPrice());
-        }
+        savedBook.setPrice(book.getPrice());
     }
 
     @Override

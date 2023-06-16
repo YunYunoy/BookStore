@@ -1,9 +1,8 @@
 package myapp.com.bookstore.services;
 
 import myapp.com.bookstore.model.BookDTO;
-import myapp.com.bookstore.model.BookGenre;
+import myapp.com.bookstore.enums.BookGenre;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
