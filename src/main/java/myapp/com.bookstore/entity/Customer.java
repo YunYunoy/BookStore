@@ -47,5 +47,5 @@ public class Customer {
 
     @Builder.Default
     @OneToMany(mappedBy = "customer")
-    private Set<BookOrder> beerOrders = new HashSet<>();
+    private Set<BookOrder> bookOrders = new HashSet<>();
 }

@@ -1,7 +1,10 @@
 package myapp.com.bookstore.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import myapp.com.bookstore.enums.OrderStatus;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -37,6 +40,7 @@ public class BookOrder {
     @Column(updatable = false)
     @CreationTimestamp
     private Timestamp createdCate;
+
     @UpdateTimestamp
     private Timestamp updatedDate;
 
@@ -45,6 +49,6 @@ public class BookOrder {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
-        customer.getBeerOrders().add(this);
+        customer.getBookOrders().add(this);
     }
 }
