@@ -58,6 +58,7 @@ This project has the following dependencies:
 - **Spring Boot Starter Security**
 - **Spring Security Test**
 - **Spring Boot Starter Test**
+- **JUnit / Mockito**
 - **Spring Boot DevTools**
 - **Lombok**
 - **MapStruct**
@@ -109,13 +110,34 @@ Application utilizes method-level security and for full accessibility please use
 - `username: admin`
 - `password: admin`
 
-## Postman Examples
+## Testing
 
+The application underwent testing using **JUnit**, **Mockito**, and **Postman**.
+Junit and Mockito were utilized for unit testing and mocking 
+dependencies, ensuring the quality and accuracy of the code.
+Postman was employed to perform integration and API testing, 
+validating the functionality and interactions of the application 
+components.
+
+### Postman screenshots
+
+###### book/controller.POST
 ![img_1.png](img/img_1.png)
 
+###### book/controller.GET
 ![img_2.png](img/img_2.png)
 
+###### book/controller.PUT (not-validated-response)
+![img.png](img/img_4.png)
+
+###### auth/controller.POST
 ![img_3.png](img/img_3.png)
+
+###### auth/controller.POST (not-validated-response)
+![img.png](img/img_5.png)
+
+
+
 
 ## Project Structure
 
