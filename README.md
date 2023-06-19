@@ -11,7 +11,7 @@ database for development and testing purposes.
 - [Description](#description)
 - [Features](#features)
 - [Prerequisites](#prerequisites)
-- [Dependencies/Technology](#dependencies/technology)
+- [Dependencies/Technology](#dependenciestechnology)
 - [Getting Started](#getting-started)
 - [API Documentation](#api-documentation)
 - [Security](#security)
