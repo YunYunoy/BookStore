@@ -7,6 +7,17 @@ application developed for managing a book store. It is built using technologies 
 and Spring 6, providing a robust and scalable solution. The application utilizes H2 in-memory 
 database for development and testing purposes.
 
+## Table of Contents
+- [Description](#description)
+- [Features](#features)
+- [Prerequisites](#prerequisites)
+- [Dependencies / Technology](#dependency-/-technology)
+- [Getting Started](#getting-started)
+- [OpenApi Screenshots](#ppenapi-screenshots)
+- [Security](#security)
+- [Testing](#testing)
+
+
 ### Features
 
 **1. User Registration and Login:**
