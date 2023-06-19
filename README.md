@@ -147,7 +147,9 @@ components.
 ![img.png](img/img_5.png)
 
 
-Contributions to the Products Manager project are welcome.
+## Contributions
+
+to the Products Manager project are welcome.
 If you encounter any issues or have suggestions for improvements,
 please [create an issue](https://github.com/YunYunoy/BookStore/issues) or submit a pull request.
 
