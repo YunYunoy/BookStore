@@ -11,9 +11,9 @@ database for development and testing purposes.
 - [Description](#description)
 - [Features](#features)
 - [Prerequisites](#prerequisites)
-- [Dependencies / Technology](#dependencies-/-technology)
+- [Dependencies/Technology](#dependencies/technology)
 - [Getting Started](#getting-started)
-- [OpenApi Screenshots](#openapi-screenshots)
+- [API Documentation](#api-documentation)
 - [Security](#security)
 - [Testing](#testing)
 
@@ -58,7 +58,7 @@ Before running this application, make sure you have the following installed:
 - Java 17
 - Maven
 
-## Dependencies / Technology
+## Dependencies/Technology
 
 This project has the following dependencies:
 
