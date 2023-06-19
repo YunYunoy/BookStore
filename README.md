@@ -11,9 +11,9 @@ database for development and testing purposes.
 - [Description](#description)
 - [Features](#features)
 - [Prerequisites](#prerequisites)
-- [Dependencies / Technology](#dependency-/-technology)
+- [Dependencies / Technology](#dependencies-/-technology)
 - [Getting Started](#getting-started)
-- [OpenApi Screenshots](#ppenapi-screenshots)
+- [OpenApi Screenshots](#openapi-screenshots)
 - [Security](#security)
 - [Testing](#testing)
 
