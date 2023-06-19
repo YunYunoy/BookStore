@@ -147,17 +147,7 @@ components.
 ![img.png](img/img_5.png)
 
 
-
-
-## Project Structure
-
-The project follows a standard Maven directory structure:
-
-- src/main/java: Contains the Java source files.
-- src/main/resources: Contains the application properties and static resources.
-- src/test/java: Contains the test classes.
-
-## Contributing
-
-Contributions to this project are welcome. If you find any issues or have suggestions for improvements, please create an issue or submit a pull request.
+Contributions to the Products Manager project are welcome.
+If you encounter any issues or have suggestions for improvements,
+please [create an issue](https://github.com/YunYunoy/BookStore/issues) or submit a pull request.
 
